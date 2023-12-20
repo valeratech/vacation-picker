@@ -44,12 +44,19 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    const localStorageIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    if (localStorageIds.indexOf(id) === -1) {
+      localStorage.setItem('selectedPlaces', JSON.stringify([id, ...storeIds]));
+    }
   }
 
   function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
+
+
     modal.current.close();
   }
 
